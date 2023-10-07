@@ -10,6 +10,6 @@ In this case, the reward for the network is the direct score from the game itsel
 The networks take a condensed array of pixel values as an input, and output a range of values from 1 - 9 that correspond to different directions Ms. PacMan can move. 
 
 ## Credits
-*OpenAI's [Gymnasium](https://github.com/Farama-Foundation/Gymnasium) was used to setup the Ms. PacMan environment.
-*[neat-python] (https://github.com/CodeReclaimers/neat-python) was used as the foundation for the NEAT algorithm.
-*Lucas Thompson's [YouTube tutorial](https://www.youtube.com/playlist?list=PLTWFMbPFsvz3CeozHfeuJIXWAJMkPtAdS) was followed occasionally to familiarize myself with the similar [retro](https://github.com/openai/retro) library.
+* OpenAI's [Gymnasium](https://github.com/Farama-Foundation/Gymnasium) was used to setup the Ms. PacMan environment.
+* [neat-python](https://github.com/CodeReclaimers/neat-python) was used as the foundation for the NEAT algorithm.
+* Lucas Thompson's [YouTube tutorial](https://www.youtube.com/playlist?list=PLTWFMbPFsvz3CeozHfeuJIXWAJMkPtAdS) was followed occasionally to familiarize myself with the similar [retro](https://github.com/openai/retro) library.
