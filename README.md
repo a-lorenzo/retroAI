@@ -9,9 +9,9 @@ In this case, the reward for the network is the direct score from the game itsel
 The networks take a condensed array of pixel values as an input, and output a range of values from 1 - 9 that correspond to different directions Ms. PacMan can move.
 
 ## Future plans
-- [] Change environemt to be compatible with OpenCV to see "computer vision"
-- [] Add GUI for game view, network outputs, etc.
-- [] Visualize NN's without input layer, implement understanable representation
+- [ ] Change environemt to be compatible with OpenCV to see "computer vision"
+- [ ] Add GUI for game view, network outputs, etc.
+- [ ] Visualize NN's without input layer, implement understanable representation
 
 ## Credits
 * OpenAI's [Gymnasium](https://github.com/Farama-Foundation/Gymnasium) was used to setup the Ms. PacMan environment.
