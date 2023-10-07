@@ -6,7 +6,12 @@ This is a personal project of my own attempt to train a NEAT algorithm to play a
 
 In this case, the reward for the network is the direct score from the game itself; future generations of networks are created based on the highest scoring networks of previous generations.
 
-The networks take a condensed array of pixel values as an input, and output a range of values from 1 - 9 that correspond to different directions Ms. PacMan can move. 
+The networks take a condensed array of pixel values as an input, and output a range of values from 1 - 9 that correspond to different directions Ms. PacMan can move.
+
+## Future plans
+- [] Change environemt to be compatible with OpenCV to see "computer vision"
+- [] Add GUI for game view, network outputs, etc.
+- [] Visualize NN's without input layer, implement understanable representation
 
 ## Credits
 * OpenAI's [Gymnasium](https://github.com/Farama-Foundation/Gymnasium) was used to setup the Ms. PacMan environment.
