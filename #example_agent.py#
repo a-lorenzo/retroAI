@@ -21,6 +21,7 @@ def eval_genomes(genomes, config):
         iny = int(iny/8)
         net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
         visualize.draw_net(config, genome, view=True, fmt='png')
+        
         #net.visualize()
         #visualize.draw_net(config, net, True)
 

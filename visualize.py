@@ -161,7 +161,7 @@ def draw_net(config, genome, view=False, filename=None, node_names=None, show_di
             continue
 
         attrs = {'style': 'filled',
-                 'fillcolor': node_colors.get(n, 'white')}
+                'fillcolor': node_colors.get(n, 'white')}
         dot.node(str(n), _attributes=attrs)
 
     for cg in genome.connections.values():
