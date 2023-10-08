@@ -89,7 +89,7 @@ p.add_reporter(stats)
 p.add_reporter(neat.Checkpointer(10))
 
 # Run the neat algorithm for 10 generations and write the winner
-winner = p.run(eval_genomes, 1)
+winner = p.run(eval_genomes, 10)
 print('\nBest genome:\n{!s}'.format(winner))
 with open('winner.pkl', 'wb') as output:
     pickle.dump(winner, output, 1)
