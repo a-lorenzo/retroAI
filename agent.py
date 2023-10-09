@@ -4,8 +4,9 @@ import cv2
 import neat
 import pickle
 import visualize
+import matplotlib.pyplot as plt
 
-env = gym.make("ALE/MsPacman-v5", render_mode="human")
+env = gym.make("ALE/MsPacman-v5", render_mode="rgb_array")
 env.metadata['render_fps'] = 120
 imgarray = []
 
@@ -20,7 +21,7 @@ def eval_genomes(genomes, config):
         inx = int(inx/8)
         iny = int(iny/8)
         net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
-        visualize.draw_net(config, genome, view=True, fmt='png')
+        #visualize.draw_net(config, genome, view=True, fmt='png')
         #net.visualize()
         #visualize.draw_net(config, net, True)
 
@@ -35,7 +36,11 @@ def eval_genomes(genomes, config):
 
 
         while not done:
-            env.render()
+            img = env.render()
+            originalimg = img
+            originalimg = cv2.resize(originalimg, (300, 500), interpolation=cv2.INTER_NEAREST)
+            #cv2.imshow("Human vision", originalimg)
+            #cv2.waitKey(1)
             frame += 1
 
             # Reducing screenshot of emulator
@@ -45,18 +50,32 @@ def eval_genomes(genomes, config):
             #ob = np.reshape(ob, (inx, iny))
 
             # Flattening image into 1D array
-            for x in ob:
-                for y in x:
-                    if not isinstance(y[0][0], str):
-                        imgarray.append(float(y[0][0]) / 255.0)
+            #for x in ob:
+            #    for y in x:
+            #        if not isinstance(y[0][0], str):
+            #            imgarray.append(float(y[0][0]) / 255.0)
+            img = cv2.resize(img, (inx, iny))
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            #img = np.reshape(img, (inx, iny))
+            img = cv2.threshold(img, 57, 255, cv2.THRESH_TOZERO)[1]
+            start_y = 0
+            start_x = 0
+            end_x = inx
+            end_y = 16
+            img = img[start_y:end_y, start_x:end_x]
+            imgarray = np.ndarray.flatten(img)
 
-            
+            img = cv2.resize(img, (416, 240), interpolation=cv2.INTER_NEAREST)
+            cv2.imshow("Neural net vision", img)
+            cv2.waitKey(1)
+            #plt.imshow(img, interpolation="nearest")
+            #plt.show()
             nnOutput = net.activate(imgarray)
-            
+
             action = np.argmax(nnOutput)
             result  = env.step(action)
             observation, reward, terminated, truncated, info = env.step(action)
-            imgarray.clear()
+            imgarray = []
             fitness_current += reward
 
             # Evaluating fitness with in-game score
