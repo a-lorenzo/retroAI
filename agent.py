@@ -22,8 +22,6 @@ def eval_genomes(genomes, config):
         iny = int(iny/8)
         net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
         #visualize.draw_net(config, genome, view=True, fmt='png')
-        #net.visualize()
-        #visualize.draw_net(config, net, True)
 
         current_max_fitness = 0
         fitness_current = 0
@@ -31,47 +29,59 @@ def eval_genomes(genomes, config):
         counter = 0
         score = 0
         score_max = 0
-
         done = False
 
 
         while not done:
             img = env.render()
-            originalimg = img
-            originalimg = cv2.resize(originalimg, (300, 500), interpolation=cv2.INTER_NEAREST)
+            frame += 1
+            
+            # Save the original image and display it for comparision; "human vision"
+            # Can be commented out to increase speed
+            #originalimg = img
+            #originalimg = cv2.resize(originalimg, (300, 500), interpolation=cv2.INTER_NEAREST)
             #cv2.imshow("Human vision", originalimg)
             #cv2.waitKey(1)
-            frame += 1
+            
 
             # Reducing screenshot of emulator
             #scaledimg = cv2.cvtColor(ob, cv2.COLOR_BGR2GRAY)
             #ob = cv2.resize(ob, (inx, iny))
             #ob = cv2.cvtColor(ob, cv2.COLOR_BGR2GRAY)
             #ob = np.reshape(ob, (inx, iny))
-
-            # Flattening image into 1D array
-            #for x in ob:
-            #    for y in x:
-            #        if not isinstance(y[0][0], str):
-            #            imgarray.append(float(y[0][0]) / 255.0)
             img = cv2.resize(img, (inx, iny))
             img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            
+            # Reshaping seems to distort the image beyond recognition
             #img = np.reshape(img, (inx, iny))
+            
+            # Thresholding the background into black, everything else into gradient
             img = cv2.threshold(img, 57, 255, cv2.THRESH_TOZERO)[1]
+            
+            # Cropping unnecessary information from the image
             start_y = 0
             start_x = 0
             end_x = inx
             end_y = 16
             img = img[start_y:end_y, start_x:end_x]
+            
+            # Flattening image into 1D array
+            #for x in ob:
+            #    for y in x:
+            #        if not isinstance(y[0][0], str):
+            #            imgarray.append(float(y[0][0]) / 255.0)
             imgarray = np.ndarray.flatten(img)
-
-            img = cv2.resize(img, (416, 240), interpolation=cv2.INTER_NEAREST)
-            cv2.imshow("Neural net vision", img)
-            cv2.waitKey(1)
-            #plt.imshow(img, interpolation="nearest")
-            #plt.show()
+            
+            # Enlarge image without antialiasing to clearly see inputs to neural net; "computer vision"
+            # Can be commented out to increase speed
+            #img = cv2.resize(img, (416, 240), interpolation=cv2.INTER_NEAREST)
+            #cv2.imshow("Neural net vision", img)
+            #cv2.waitKey(1)
+            ####plt.imshow(img, interpolation="nearest")
+            ####plt.show()
+            
+            # Send inputs to neural net and get response to send back to environment
             nnOutput = net.activate(imgarray)
-
             action = np.argmax(nnOutput)
             result  = env.step(action)
             observation, reward, terminated, truncated, info = env.step(action)
@@ -85,15 +95,16 @@ def eval_genomes(genomes, config):
             else:
                 counter += 1
 
+            # Terminate neural network when Ms. PacMan dies or when set time is up
             if done or counter == 250 or terminated or truncated:
                 done = True
                 print("Genome: ", genome_id, "Fitness: ", fitness_current)
-
+            # Set genome's fitness
             genome.fitness = fitness_current
             
             
 
-            
+
 config = neat.Config(neat.DefaultGenome,
                      neat.DefaultReproduction,
                      neat.DefaultSpeciesSet,
@@ -107,8 +118,8 @@ stats = neat.StatisticsReporter()
 p.add_reporter(stats)
 p.add_reporter(neat.Checkpointer(10))
 
-# Run the neat algorithm for 10 generations and write the winner
-winner = p.run(eval_genomes, 10)
+# Run the neat algorithm for n generations and write the winner
+winner = p.run(eval_genomes, 100)
 print('\nBest genome:\n{!s}'.format(winner))
 with open('winner.pkl', 'wb') as output:
     pickle.dump(winner, output, 1)
