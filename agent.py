@@ -50,7 +50,12 @@ def eval_genomes(genomes, config):
             #ob = cv2.cvtColor(ob, cv2.COLOR_BGR2GRAY)
             #ob = np.reshape(ob, (inx, iny))
             img = cv2.resize(img, (inx, iny))
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            # TODO: make Ms. PacMan super bright before grayscale
+            #plt.imshow(img, interpolation="nearest")
+            #plt.show()
+            #exit(0)
+            #imgarray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # turn off color for nn vision
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)     
             
             # Reshaping seems to distort the image beyond recognition
             #img = np.reshape(img, (inx, iny))
@@ -70,7 +75,8 @@ def eval_genomes(genomes, config):
             #    for y in x:
             #        if not isinstance(y[0][0], str):
             #            imgarray.append(float(y[0][0]) / 255.0)
-            imgarray = np.ndarray.flatten(img)
+            #imgarray = np.ndarray.flatten(imgarray)          # turn off color for nn vision  
+            imgarray = np.ndarray.flatten(img)             
             
             # Enlarge image without antialiasing to clearly see inputs to neural net; "computer vision"
             # Can be commented out to increase speed

@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 
 env = gym.make("ALE/MsPacman-v5", render_mode="rgb_array")
-env.metadata['render_fps'] = 60
+env.metadata['render_fps'] = 30
 imgarray = []
 
 config = neat.Config(neat.DefaultGenome,
@@ -53,6 +53,7 @@ while not done:
     cv2.waitKey(1)
                 
     img = cv2.resize(img, (inx, iny))
+    #imgarray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     img = cv2.threshold(img, 57, 255, cv2.THRESH_TOZERO)[1]
     start_y = 0
@@ -60,6 +61,7 @@ while not done:
     end_x = inx
     end_y = 16
     img = img[start_y:end_y, start_x:end_x]
+    #imgarray = np.ndarray.flatten(imgarray)
     imgarray = np.ndarray.flatten(img)
     img = cv2.resize(img, (416, 240), interpolation=cv2.INTER_NEAREST)
     cv2.imshow("Neural net vision", img)
