@@ -38,10 +38,10 @@ def eval_genomes(genomes, config):
             
             # Save the original image and display it for comparision; "human vision"
             # Can be commented out to increase speed
-            #originalimg = img
-            #originalimg = cv2.resize(originalimg, (300, 500), interpolation=cv2.INTER_NEAREST)
-            #cv2.imshow("Human vision", originalimg)
-            #cv2.waitKey(1)
+            originalimg = img
+            originalimg = cv2.resize(originalimg, (300, 500), interpolation=cv2.INTER_NEAREST)
+            cv2.imshow("Human vision", originalimg)
+            cv2.waitKey(1)
             
 
             # Reducing screenshot of emulator
@@ -80,9 +80,9 @@ def eval_genomes(genomes, config):
             
             # Enlarge image without antialiasing to clearly see inputs to neural net; "computer vision"
             # Can be commented out to increase speed
-            #img = cv2.resize(img, (416, 240), interpolation=cv2.INTER_NEAREST)
-            #cv2.imshow("Neural net vision", img)
-            #cv2.waitKey(1)
+            img = cv2.resize(img, (416, 240), interpolation=cv2.INTER_NEAREST)
+            cv2.imshow("Neural net vision", img)
+            cv2.waitKey(1)
             ####plt.imshow(img, interpolation="nearest")
             ####plt.show()
             
