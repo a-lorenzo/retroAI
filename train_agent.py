@@ -81,7 +81,7 @@ def eval_genomes(genomes, config):
             # Enlarge image without antialiasing to clearly see inputs to neural net; "computer vision"
             # Can be commented out to increase speed
             img = cv2.resize(img, (416, 240), interpolation=cv2.INTER_NEAREST)
-            cv2.imshow("Neural net vision", img)
+            cv2.imshow("Neural Net Vision", img)
             cv2.waitKey(1)
             ####plt.imshow(img, interpolation="nearest")
             ####plt.show()
