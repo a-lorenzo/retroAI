@@ -17,12 +17,11 @@ def eval_genomes(genomes, config):
         ac = env.action_space.sample()
         
         inx, iny, inc = env.observation_space.shape
-
         inx = int(inx/8)
         iny = int(iny/8)
-        net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
-        #visualize.draw_net(config, genome, view=True, fmt='png')
 
+        net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
+        
         current_max_fitness = 0
         fitness_current = 0
         frame = 0
@@ -114,7 +113,6 @@ print('\nBest genome:\n{!s}'.format(winner))
 with open('winner.pkl', 'wb') as output:
     pickle.dump(winner, output, 1)
 
-#visualize.draw_net(config, winner, True, fmt='png')
 visualize.plot_stats(stats, ylog=False, view=True)
 visualize.plot_species(stats, view=True)
 
