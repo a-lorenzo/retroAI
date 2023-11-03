@@ -8,7 +8,7 @@ In this case, the reward for the network is the direct score from the game itsel
 ## Input to the network
 ![Screenshot of the input that the neural net takes in (before being flattened)](/images/neuralnetvision.png)
 The networks take an array of pixel values as an input, and output a range of values from 1 - 9 that correspond to different directions Ms. PacMan can move. To minimize the information fed into the network and prioritize the most relevant information, a number of changes were made to the image before being flattened into an array:
-* Resolution was reduced by a factor of 8
+* Resolution was downscaled by a factor of 8
 * Image was changed to grayscale
   - Grayscale was also done with a threshold to zero; defaults all background values to 0 for greater contrast with relevant information (walls, ghosts, points, etc.)
 * Unnecessary information was cropped from the image
