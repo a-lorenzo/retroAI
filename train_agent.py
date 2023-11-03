@@ -42,19 +42,10 @@ def eval_genomes(genomes, config):
             originalimg = cv2.resize(originalimg, (300, 500), interpolation=cv2.INTER_NEAREST)
             cv2.imshow("Human vision", originalimg)
             cv2.waitKey(1)
-            
 
             # Reducing screenshot of emulator
-            #scaledimg = cv2.cvtColor(ob, cv2.COLOR_BGR2GRAY)
-            #ob = cv2.resize(ob, (inx, iny))
-            #ob = cv2.cvtColor(ob, cv2.COLOR_BGR2GRAY)
-            #ob = np.reshape(ob, (inx, iny))
             img = cv2.resize(img, (inx, iny))
-            # TODO: make Ms. PacMan super bright before grayscale
-            #plt.imshow(img, interpolation="nearest")
-            #plt.show()
-            #exit(0)
-            #imgarray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # turn off color for nn vision
+            # turn off color for nn vision
             img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)     
             
             # Reshaping seems to distort the image beyond recognition
@@ -71,11 +62,6 @@ def eval_genomes(genomes, config):
             img = img[start_y:end_y, start_x:end_x]
             
             # Flattening image into 1D array
-            #for x in ob:
-            #    for y in x:
-            #        if not isinstance(y[0][0], str):
-            #            imgarray.append(float(y[0][0]) / 255.0)
-            #imgarray = np.ndarray.flatten(imgarray)          # turn off color for nn vision  
             imgarray = np.ndarray.flatten(img)             
             
             # Enlarge image without antialiasing to clearly see inputs to neural net; "computer vision"
@@ -83,8 +69,6 @@ def eval_genomes(genomes, config):
             img = cv2.resize(img, (416, 240), interpolation=cv2.INTER_NEAREST)
             cv2.imshow("Neural Net Vision", img)
             cv2.waitKey(1)
-            ####plt.imshow(img, interpolation="nearest")
-            ####plt.show()
             
             # Send inputs to neural net and get response to send back to environment
             nnOutput = net.activate(imgarray)
