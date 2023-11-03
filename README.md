@@ -5,6 +5,7 @@ A NEAT algorithm trained to play Ms. Pacman on the Atari 2600.
 This is a personal project of my own attempt to train a NEAT algorithm to play a retro video game. The NEAT (Neuroevolution of augmenting topologies) algorithm is an evolutionary algorithm that creates generations of neural networks and evolves overtime based on the successful networks of previous generations.
 
 In this case, the reward for the network is the direct score from the game itself; future generations of networks are created based on the highest scoring networks of previous generations.
+# Input to the network
 ![Screenshot of the input that the neural net takes in (before being flattened)](/images/neuralnetvision.png)
 The networks take an array of pixel values as an input, and output a range of values from 1 - 9 that correspond to different directions Ms. PacMan can move. To minimize the information fed into the network and prioritize the most relevant information, a number of changes were made to the image before being flattened into an array:
 * Resolution was reduced by a factor of 8
